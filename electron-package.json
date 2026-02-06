@@ -1,0 +1,58 @@
+{
+  "name": "streamflix-xtream",
+  "version": "1.0.0",
+  "description": "Netflix-inspired Xtream Codes streaming application for Windows",
+  "author": "StreamFlix",
+  "private": true,
+  "main": "electron.js",
+  "homepage": "./",
+  "scripts": {
+    "electron": "electron .",
+    "electron-dev": "concurrently \"cd frontend && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-build": "cd frontend && yarn build && cd .. && electron-builder build --win",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.streamflix.app",
+    "productName": "StreamFlix",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "files": [
+      "electron.js",
+      "frontend/build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "frontend/public/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "StreamFlix"
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "wait-on": "^7.2.0"
+  }
+}
